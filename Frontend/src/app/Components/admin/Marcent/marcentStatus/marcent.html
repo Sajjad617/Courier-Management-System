@@ -1,0 +1,129 @@
+<div class="rounded-3xl bg-white border border-slate-200 overflow-hidden">
+  <div class="flex justify-between items-center p-4 border-b border-slate-200">
+    <div>
+      <h4 class="font-semibold">Marcent</h4>
+      <p class="text-xs text-slate-500">All Marcent</p>
+    </div>
+
+    <div class="">
+      <input type="text" placeholder="Search..."
+        class="px-3 py-2 rounded-xl border border-slate-200 text-sm" />
+    </div>
+    <div>
+      <a routerLink="/Create-New-Marcant">
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 border border-green-700 rounded">
+          Create Marcent
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="flex justify-between gap-4 p-4 border-b border-slate-200">
+    <!-- ✅ Approved List -->
+    <div class="w-1/2 overflow-x-auto">
+      <table class="min-w-full text-sm table-fixed border-collapse border border-slate-300">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="p-3 w-[60px] text-center border">SL</th>
+            <th class="p-3 w-[200px] text-center border">CompanyName</th>
+            <th class="p-3 w-[150px] text-center border">Phone</th>
+            <th class="p-3 w-[120px] text-center border">Status</th>
+            <th class="p-3 w-[160px] text-center border">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of app_rcv_data; track item.Id ) {
+          <tr class="border-t h-[60px]">
+            <td class="p-3 text-center border">{{item.Id}}</td>
+            <td class="p-3 text-center border truncate">{{item.CompanyName}}</td>
+            <td class="p-3 text-center border truncate">{{item.MobileNumber}}</td>
+            <td class="p-3 text-center border">
+              <button (click)="Updateapproved(item.Id, false)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                Deactive
+              </button>
+            </td>
+            <td class="p-3 text-center border">
+              <button (click)="MarcentView(item.Id)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                View
+              </button>
+
+              <button (click)="rmv(item.Id)"
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded ml-2">
+                Delete
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ❌ Unapproved List -->
+    <div class="w-1/2 overflow-x-auto">
+      <table class="min-w-full text-sm table-fixed border-collapse border border-slate-300">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="p-3 w-[60px] text-center border">SL</th>
+            <th class="p-3 w-[200px] text-center border">CompanyName</th>
+            <th class="p-3 w-[150px] text-center border">Phone</th>
+            <th class="p-3 w-[120px] text-center border">Status</th>
+            <th class="p-3 w-[160px] text-center border">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of unApp_rcv_data; track item.Id ) {
+          <tr class="border-t h-[60px]">
+            <td class="p-3 text-center border">{{item.Id}}</td>
+            <td class="p-3 text-center border truncate">{{item.CompanyName}}</td>
+            <td class="p-3 text-center border truncate">{{item.MobileNumber}}</td>
+            <td class="p-3 text-center border">
+              <button (click)="Updateapproved(item.Id, true)"
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded ml-2">
+                Active
+              </button>
+            </td>
+            <td class="p-3 text-center border">
+              <button (click)="MarcentView(item.Id)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                View
+              </button>
+
+              <button (click)="rmv(item.Id)"
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded ml-2">
+                Delete
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Modal -->
+<div *ngIf="isModalOpen"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white rounded-2xl shadow-lg w-96">
+    <div class="bg-blue-600 text-white p-4 rounded-t-2xl">
+      <h3 class="text-lg font-semibold">Marcent Details</h3>
+    </div>
+    <div class="p-4 space-y-2">
+      <p><b>ID:</b> {{selectedItem?.Id}}</p>
+      <p><b>Company Name:</b> {{selectedItem?.CompanyName}}</p>
+      <p><b>Owner Name:</b> {{selectedItem?.OwnerName}}</p>
+      <p><b>Phone:</b> {{selectedItem?.MobileNumber}}</p>
+      <p><b>Email:</b> {{selectedItem?.Email}}</p>
+      <p><b>Status:</b> {{selectedItem?.Approve ? 'Active' : 'Inactive'}}</p>
+    </div>
+    <div class="bg-gray-100 px-4 py-3 text-right">
+      <button (click)="closeModal()"
+        class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

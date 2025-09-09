@@ -1,0 +1,101 @@
+<div class="w-full flex flex-row justify-between gap-6">
+  
+  <!-- Left Side: Create City Form -->
+     <div class="w-1/2 rounded-3xl bg-white border border-slate-200 overflow-hidden">
+    <div class="flex justify-center items-center p-4 border-b border-slate-200">
+      <div>
+        <h4 class="font-semibold">City Name</h4>
+        <p class="text-xs text-slate-500">Our service in this city</p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="text- p-3">SL</th>
+            <th class="text-center p-3">City</th>
+            <th class="text-center p-3">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of getdata ; track item.CityId; let i = $index ) {
+            
+            <tr class="border-t" >
+              <!-- <td class="p-3">{{ i+1 }}</td> -->
+              <td class="p-3">{{i+1}}</td>
+              <td class="p-3 text-center">{{ item.CityName }}</td>
+              <td class="p-3 text-center gap-4">
+                <button (click)="EditClick(item.CityId)" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-3 border border-blue-700 rounded">Edit</button>
+                <button (click)="rmv(item.CityId)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 border border-red-700 rounded">Delete</button>
+              </td>
+            </tr>
+          }
+          <!-- <tr>
+            <th class="text-left p-3">SL</th>
+            <th class="text-center p-3">Casdasdasdasity</th>
+          </tr>
+          <tr>
+            <th class="text-left p-3">SL</th>
+            <th class="text-center p-3">Casdasd</th>
+          </tr>
+          <tr>
+            <th class="text-left p-3">SL</th>
+            <th class="text-center p-3">Casdasdasdasity</th>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- Right Side: City Table -->
+
+  <div class="w-1/2 max-w-5xl bg-white p-8 rounded-lg shadow">
+    <!-- Breadcrumb -->
+    <div class=" text-sm text-gray-500 mb-4">
+      <span class="text-gray-400">Location</span>
+      <span class="mx-2">›</span>
+      <span class="font-medium text-gray-700">Create a City</span>
+    </div>
+
+    <!-- Title -->
+    <h2 class=" text-2xl font-semibold text-gray-800 mb-6">Create City</h2>
+
+    <!-- Form -->
+   <form #cityForm="ngForm" (ngSubmit)="citysubmit(cityForm)" class="space-y-6">
+  <div class="grid grid-cols-1 gap-6">
+    <div>
+      <label class="block mb-2">
+        City Name <span class="text-red-500">*</span>
+      </label>
+
+     <input type="text"
+       name="name"
+       [(ngModel)]="data.name"
+       required
+       #cityName="ngModel"
+       placeholder="Enter City Name Here"
+       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-pink-400 focus:outline-none" />
+
+
+      <!-- Error Message -->
+      <p class="text-red-500 text-sm mt-1"
+         *ngIf="cityName?.invalid && (cityName?.touched || cityForm.submitted)">
+        City name is required!
+      </p>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex justify-center space-x-4 pt-4">
+    <button type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg">
+      {{buttoname}}
+    </button>
+  </div>
+</form>
+
+
+  </div>
+</div>

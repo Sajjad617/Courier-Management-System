@@ -1,0 +1,62 @@
+<!-- <p>all-parcel works!</p> -->
+<div class="rounded-3xl bg-white border border-slate-200 overflow-hidden">
+  <div class="flex justify-between items-center p-4 border-b border-slate-200">
+    <div>
+      <h4 class="font-semibold">My Parcels</h4>
+      <p class="text-xs text-slate-500">Track status from pickup to delivery</p>
+    </div>
+
+    <div class="">
+      <input type="text" placeholder="Search..." class="px-3 py-2 rounded-xl border border-slate-200 text-sm" />
+      <!-- <select class="px-3 py-2 rounded-xl border border-slate-200 text-sm">
+        <option>All</option>
+        <option>Pending</option>
+        <option>Picked</option>
+        <option>In Transit</option>
+        <option>Delivered</option>
+        <option>Returned</option>
+      </select> -->
+    </div>
+    <!-- <div>
+      <a  routerLink="/Create-New-Parcel">
+
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 border border-green-700 rounded">Create Parcel</button>
+      </a>
+
+    </div> -->
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm">
+      <thead class="bg-slate-50 text-slate-600">
+        <tr>
+          <th class="text-left p-3">SL</th>
+          <th class="text-left p-3">Parcel ID</th>
+          <th class="text-left p-3">Receiver</th>
+          <th class="text-left p-3">Phone</th>
+          <th class="text-left p-3">Address</th>
+
+          <th class="text-left p-3">Status</th>
+          <!-- <th class="text-left p-3">Action</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of rcv_data; track item.ParcelId ) {
+          <tr class="border-t" >
+          <td class="p-3">{{item.ParcelId}}</td>
+          <td class="p-3">{{item.percelTrackingId}}</td>
+          <td class="p-3">{{item.ReceiverName}}</td>
+          <td class="p-3">{{item.Phone}}</td>
+          <td class="p-3">{{item.Address}}</td>
+
+          <td class="p-3"><span class="font-bold chip status-picked bg-blue-100 text-blue-800">{{item.Name}}</span></td>
+          <!-- <td class="p-3 gap-4"> -->
+            <!-- <button (click)="EditClick(item.ParcelId)" class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-3 border border-blue-700 rounded">Edit</button> -->
+            <!-- <button (click)="update(item.ParcelId)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 border border-red-700 rounded">Confirm</button> -->
+          <!-- </td> -->
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

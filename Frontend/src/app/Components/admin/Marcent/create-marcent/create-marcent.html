@@ -1,0 +1,72 @@
+
+<p>create-marcent works!</p>
+<section class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-8 mb-8">
+    <h2 class="text-2xl font-semibold mb-6">Create a Marcent</h2>
+    <form>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-gray-700 mb-1">Company Name</label>
+          <input type="text" name="companyName" [(ngModel)]="signup_data.companyName" placeholder="Store name"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        </div>
+        <div>
+          <label class="block text-gray-700 mb-1">Owner's Name</label>
+          <input type="text" name="ownerName" [(ngModel)]="signup_data.ownerName" placeholder="Type your full name"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        </div>
+        <div>
+          <label class="block text-gray-700 mb-1">Mobile Number</label>
+          <input type="text" name="mobile" [(ngModel)]="signup_data.mobile" placeholder="e.g. 01000000000"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        </div>
+        <div>
+          <label class="block text-gray-700 mb-1">Email Address</label>
+          <input type="email" name="email" [(ngModel)]="signup_data.email" placeholder="e.g. your@email.com"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        </div>
+<!--
+        <div>
+          <label class="block text-gray-700 mb-1">Password</label>
+          <div class="relative">
+            <input type="password" name="Password" [(ngModel)]="signup_data.Password" placeholder="Set your password"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            Optional: eye icon for toggle visibility
+          </div>
+        </div>
+         -->
+        <div class="flex items-center">
+          <input type="checkbox" id="terms" class="mr-2">
+          <label for="terms" class="text-gray-600 text-sm">
+            By proceeding, I agree to the Terms & Conditions.
+          </label>
+           <!-- Error Message -->
+          <!-- <p class="text-red-500 text-sm mt-1"
+            *ngIf="cityName?.invalid && (cityName?.touched || cityForm.submitted)">
+            City name is required!
+          </p> -->
+        </div>
+      </div>
+      <div class="flex justify-between mt-6 gap-4">
+        <!-- Confirm -->
+        <button type="submit" (click)="onsubmit()"
+          class="w-1/2 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition">
+          Confirm
+        </button>
+
+        <!-- Cancel -->
+        <a routerLink="/marcent" class="w-1/2">
+          <button type="button" class="w-full py-2 bg-pink-600 text-white rounded-md hover:bg-pink-500 transition">
+            Cancel
+          </button>
+        </a>
+      </div>
+
+      <!-- <p class="mt-4 text-center text-gray-600">
+        Have an account?
+        <a href="#" class="text-pink-500 hover:underline font-medium">Sign In</a>
+      </p> -->
+    </form>
+  </div>
+</section>

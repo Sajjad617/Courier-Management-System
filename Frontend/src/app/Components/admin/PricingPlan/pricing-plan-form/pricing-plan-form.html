@@ -1,0 +1,92 @@
+<div class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <main class=" flex items-center justify-center p-6">
+    <form class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8" autocomplete="off">
+      <h1 class="text-2xl font-semibold mb-1">Parcel Pickup & Delivery</h1>
+      <p class="text-sm text-gray-500 mb-6">Fill the details below to create a delivery order.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="pickup" class="block text-sm font-medium text-gray-700 mb-2">Pickup Location</label>
+          <select id="pickup" name="pickupLocation" [(ngModel)]="PricingPlanData.pickupLocation" required
+            class="block w-full rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500">
+            <option [ngValue]="null" disabled selected>Select Pickup Location </option>
+            @for (item of GetPricingPlanAreas; track item.Id) {
+            <option [ngValue]="item.Id">{{item.Name}}</option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label for="delivery" class="block text-sm font-medium text-gray-700 mb-2">Delivery Location</label>
+          <select id="delivery" name="deliveryLocation" [(ngModel)]="PricingPlanData.deliveryLocation" required
+            class="block w-full rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500">
+            <option [ngValue]="null" disabled selected>Select delivery Location </option>
+            @for (item of GetPricingPlanAreas; track item.Id) {
+            <option [ngValue]="item.Id">{{item.Name}}</option>
+            }
+            <!-- <option value="inside">Inside Dhaka</option>
+            <option value="outside">Outside Dhaka</option>
+            <option value="suburbs">Suburbs</option> -->
+          </select>
+        </div>
+
+        <div>
+          <label for="weight" class="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+          <div class="relative">
+            <input id="weight" name="weight" [(ngModel)]="PricingPlanData.weight" type="number" min="0" step="1"
+              placeholder="e.g. 2.5" required
+              class="block w-full rounded-lg border border-gray-300 px-4 py-2 pr-20 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" />
+            <span class="absolute inset-y-0 right-3 flex items-center text-xs text-gray-500">kg</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price (BDT)</label>
+          <div class="relative">
+            <input id="price" name="price" [(ngModel)]="PricingPlanData.price" type="number" min="0" step="1"
+              placeholder="e.g. 150.00" required
+              class="block w-full rounded-lg border border-gray-300 px-4 py-2 pr-20 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" />
+            <span class="absolute inset-y-0 right-3 flex items-center text-xs text-gray-500">BDT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between gap-4">
+
+
+        <div class="text-sm text-gray-500">Estimated delivery time: <span class="font-medium text-gray-800">2–3
+            business days</span></div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-3">
+
+        <button type="reset"
+          class="px-4 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">Reset</button>
+
+        <button type="submit" (click)="onsubmit()"
+          class="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+          {{Submit_Button}}</button>
+
+        <button routerLink="/pricing-plan-tbl"
+          class="px-4 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">Cancel</button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Optional: simple client-side validation/confirmation -->
+  <script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const pickup = document.getElementById('pickup').value.trim();
+      const delivery = document.getElementById('delivery').value.trim();
+      const weight = parseFloat(document.getElementById('weight').value) || 0;
+      const price = parseFloat(document.getElementById('price').value) || 0;
+      if (!pickup || !delivery || weight <= 0 || price < 0) {
+        alert('Please fill valid values for all fields.');
+        return;
+      }
+      // alert('Order created:\nPickup: ' + pickup + '\nDelivery: ' + delivery + '\nWeight: ' + weight + ' kg\nPrice: ' + price + ' BDT');
+      this.reset();
+    });
+  </script>
+</div>

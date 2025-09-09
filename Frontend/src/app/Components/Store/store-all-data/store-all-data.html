@@ -1,0 +1,70 @@
+<div class="bg-slate-50 text-slate-800">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold">Stores</h1>
+      <button routerLink="/create-store"
+        class="inline-flex items-center rounded-lg border border-rose-300 text-rose-600 px-4 py-2 text-sm font-medium hover:bg-rose-50 transition">
+        Create Store
+      </button>
+    </div>
+
+    <!-- Table card -->
+    <div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200">
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700">
+              <th class="text-left text-sm font-medium px-6 py-3 w-[50px]">Id</th>
+              <th class="text-left text-sm font-medium px-6 py-3 w-[70px]">Name</th>
+              <th class="text-left text-sm font-medium px-6 py-3 w-[70px]">Store Name</th>
+              <th class="text-left text-sm font-medium px-6 py-3 w-[70px]">Address</th>
+              <th class="text-left text-sm font-medium px-6 py-3 w-[320px]">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of rcv_store; track item._id) {
+              
+            <!-- Row -->
+            <tr class="border-t border-slate-200">
+              <td class="px-6 py-4 text-sm text-slate-700">{{item.StoreTrackingSeq}}</td>
+              <td class="px-6 py-4 text-sm">{{item.name}}</td>
+              <td class="px-6 py-4 text-sm">{{item.StoreName}}</td>
+              <td class="px-6 py-4 text-sm">
+                {{item.Address}},
+              </td>
+              <td class="px-6 py-4">
+                <div class=" gap-2">
+                  <button (click)="editstore(item.id)"
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-rose-300 text-rose-600 hover:bg-rose-50">
+                    Edit
+                  </button>
+                  <button
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-slate-300 text-slate-600 hover:bg-slate-50">
+                    Deactivate
+                  </button>
+                  <button
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-slate-300 text-slate-600 hover:bg-slate-50">
+                    Pickup Store
+                  </button>
+                  <button
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-slate-300 text-slate-600 hover:bg-slate-50">
+                    Return Store
+                  </button>
+                </div>
+              </td>
+            </tr>
+            }
+
+            <!-- Extra empty space row (optional, to mimic screenshot spacing) -->
+            <tr>
+              <td class="px-6 py-8" colspan="4"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
