@@ -45,7 +45,7 @@ export class CreateStore {
           this.onCityChange();
           this.selectedZone = data.zoneId;
           this.onZoneChange();
-
+          console.log(data);
           //Sweet Start
 
           //Sweet End

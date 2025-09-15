@@ -101,5 +101,22 @@ namespace Courier_MS.Controllers
             }
         }
 
+        [HttpGet("GetPrice")]
+        public async Task<IActionResult> GetPrice(int PickupLocation, int DeliveryLocation, int Weight)
+        {
+            try
+            {
+                var data = await _marcent.GetPrice(PickupLocation, DeliveryLocation, Weight);
+                return Ok(data);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        
+
     }
 }

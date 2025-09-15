@@ -10,5 +10,6 @@ namespace Courier_MS.Interface
         Task<dynamic> GetParcelById(int id);
         Task<dynamic> ParcelStatus(int id);
         Task<dynamic> IncreaseStatus(int id,int statusId);
+        Task<dynamic> GetPrice(int dPickupLocationl, int DeliveryLocation, int Weight);
     }
 }

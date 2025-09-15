@@ -1,54 +1,146 @@
 <!-- <p>new-parcel works!</p> -->
-<div class="rounded-3xl bg-white border border-slate-200 p-6">
-  <div class="flex items-center justify-between">
-    <h4 class="font-semibold">Create New Parcel</h4>
-    <a routerLink="/all-parcel">
+<form action="">
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 border border-blue-700 rounded">All Parcel</button>
-    </a>
 
-    <!-- <button class="text-sm text-slate-600 hover:text-slate-800" onclick="fillDemo('parcel')">Fill Demo</button> -->
+  <div class="rounded-3xl bg-white border border-slate-200 p-6">
+    <div class="flex items-center justify-between">
+      <h4 class="font-semibold">Create New Parcel</h4>
+      <a routerLink="/all-parcel">
+
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 border border-blue-700 rounded">All
+          Parcel</button>
+      </a>
+
+      <!-- <button class="text-sm text-slate-600 hover:text-slate-800" onclick="fillDemo('parcel')">Fill Demo</button> -->
+    </div>
+    <div class="mt-4 grid md:grid-cols-3 gap-4">
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Receiver Name</label>
+        <input id="rcv-name"  type="text" name="ReceiverName" [(ngModel)]="parcel_data.ReceiverName"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="Sajjad Hossain" />
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Phone</label>
+        <input id="rcv-phone" type="number" name="Phone" [(ngModel)]="parcel_data.Phone"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="017XXXXXXXX" />
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Weight (kg)</label>
+        <input type="number" id="Weight" name="Weight" [(ngModel)]="parcel_data.Weight"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="1.2" />
+      </div>
+      <!-- Location -->
+      <div class="md:col-span-3 text-center font-bold">
+        <label for="">Delivery Location</label>
+      </div>
+      <!-- DropDown City -->
+      <div class="md:col-span-1">
+        <select name="selectedCity" (change)="onCityChange()"
+          class="border rounded-lg w-full py-2 px-4 focus:ring-2 focus:ring-pink-400 focus:outline-none text-center"
+          [(ngModel)]="selectedCity">
+
+          <option [ngValue]="null" disabled>Select City</option>
+
+          @for (item of rcv_city ; track item.CityId ) {
+          <option [ngValue]="item.CityId">{{item.CityName}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- DropDown Zone -->
+      <div class="md:col-span-1">
+        <select name="selectedZone" (change)="onZoneChange($event)"
+          class="border rounded-lg w-full py-2 px-4 focus:ring-2 focus:ring-pink-400 focus:outline-none text-center"
+          [(ngModel)]="selectedZone">
+          <option [ngValue]="null" selected>Select Zone</option>
+
+          @for (item of rcv_zone ; track item.zoneId ) {
+          <option [value]="item.zoneId">{{item.ZoneName}}</option>
+          }
+        </select>
+      </div>
+      <!-- DropDown Area -->
+      <div class="md:col-span-1">
+        <select
+          class="border rounded-lg w-full py-2 px-4 focus:ring-2 focus:ring-pink-400 focus:outline-none text-center"
+          [(ngModel)]="parcel_data.DeliveryLocation" id="DeliveryLocation" name="DeliveryLocation">
+          <option selected [ngValue]="null" disabled>Select Area</option>
+
+          @for (item of rcv_area ; track item.AreaId ) {
+          <option [value]="item.AreaId">{{item.AreaName}}</option>
+          }
+        </select>
+      </div>
+
+      <!-- End Location -->
+      <div class="md:col-span-3">
+        <label class="block text-sm font-medium">Address</label>
+        <input type="text" name="Address" [(ngModel)]="parcel_data.Address"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="House, Road, Area, City" />
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Price (৳)</label>
+        <input type="number" name="Price" [(ngModel)]="parcel_data.Price"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="1200" />
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">COD?</label>
+        <select name="COD" [(ngModel)]="parcel_data.COD"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200">
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Notes</label>
+        <input type="text" name="Notes" [(ngModel)]="parcel_data.Notes"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="Fragile, deliver before 6 PM" />
+      </div>
+      <!-- Store OR Pickup Location -->
+      <div class="md:col-span-1">
+        <label class="font-bold block text-sm font-medium">PickUp Location</label>
+        <select name="PickupLocation" id="PickupLocation" (change)="ondeliveryChargeadd($event)"
+          class="border rounded-lg w-full py-2 px-4 focus:ring-2 focus:ring-pink-400 focus:outline-none text-center"
+          [(ngModel)]="parcel_data.PickupLocation">
+
+          <option [ngValue]="null" disabled>Select Store</option>
+
+          @for (item of rcv_store ; track item.id ) {
+          <option [ngValue]="item.id">{{item.StoreName}} </option>
+          }
+        </select>
+      </div>
+      <!-- Delivey Charge  -->
+      <div class="md:col-span-1">
+        <label class="block text-sm font-medium">Delivery Charge</label>
+        <input type="number" name="DeliveyCharge" [(ngModel)]="parcel_data.DeliveyCharge"
+          class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" [readonly]="true"
+          placeholder="Delivery Charge" />
+      </div>
+
+    </div>
+
+    <div class="mt-4 flex items-center gap-3">
+      <button (click)="Parcelsubmit()"
+        class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500">{{saveButtonName}}
+      </button>
+      <button
+        class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-sm font-semibold hover:bg-slate-50">Reset</button>
+    </div>
   </div>
-  <div class="mt-4 grid md:grid-cols-3 gap-4">
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">Receiver Name</label>
-      <input id="rcv-name" type="text" name="ReceiverName" [(ngModel)]="parcel_data.ReceiverName" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200"
-        placeholder="Sajjad Hossain" />
-    </div>
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">Phone</label>
-      <input id="rcv-phone" type="number" name="Phone" [(ngModel)]="parcel_data.Phone" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200"
-        placeholder="017XXXXXXXX" />
-    </div>
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">Weight (kg)</label>
-      <input type="text" name="Weight" [(ngModel)]="parcel_data.Weight" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="1.2" />
-    </div>
-    <div class="md:col-span-3">
-      <label class="block text-sm font-medium">Address</label>
-      <input type="text" name="Address" [(ngModel)]="parcel_data.Address" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200"
-        placeholder="House, Road, Area, City" />
-    </div>
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">Price (৳)</label>
-      <input type="number" name="Price" [(ngModel)]="parcel_data.Price" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200" placeholder="1200" />
-    </div>
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">COD?</label>
-      <select name="COD" [(ngModel)]="parcel_data.COD" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200">
-        <option  [ngValue]="true">Yes</option>
-        <option  [ngValue]="false">No</option>
-      </select>
-    </div>
-    <div class="md:col-span-1">
-      <label class="block text-sm font-medium">Notes</label>
-      <input type="text" name="Notes" [(ngModel)]="parcel_data.Notes" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-200"
-        placeholder="Fragile, deliver before 6 PM" />
-    </div>
-  </div>
-  <div class="mt-4 flex items-center gap-3">
-    <button (click)="Parcelsubmit()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500">{{saveButtonName}} </button>
-    <button
-      class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-sm font-semibold hover:bg-slate-50">Reset</button>
-  </div>
-</div>
+</form>
+<!-- <script>
+  document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const Weight = parseFloat(document.getElementById('Weight').value) || 0;
+    const DeliveryLocation = parseFloat(document.getElementById('DeliveryLocation').value) || 0;
+    const PickupLocation = parseFloat(document.getElementById('PickupLocation').value) || 0;
+    const phone = parseFloat(document.getElementById('rcv-phone').value) || 0;
+    if (pickup < 0 || delivery < 0 || weight <= 0 || price < 0) {
+      alert('Please fill valid values for all fields.');
+      return;
+    }
+    alert('Order created:\nPickup: ' + pickup + '\nDelivery: ' + delivery + '\nWeight: ' + weight + ' kg\nPrice: ' + price + ' BDT');
+    this.reset();
+  });
+</script> -->

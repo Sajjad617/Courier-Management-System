@@ -15,7 +15,7 @@ namespace Courier_MS.MarcentModel
         public decimal? Phone { get; set; }
 
         [Required]
-        public string? Weight { get; set; } = null!;
+        public int? Weight { get; set; } = null!;
 
         [Required]
         public string? Address { get; set; } = null!;
@@ -29,5 +29,13 @@ namespace Courier_MS.MarcentModel
 
         public string? Notes { get; set; }
         public decimal Status { get; set; }
+
+        [Required]
+        public int PickupLocation { get; set; }
+
+        [Required]
+        public int DeliveryLocation { get; set; }
+        [Required]
+        public int DeliveyCharge { get; set; }
     }
 }

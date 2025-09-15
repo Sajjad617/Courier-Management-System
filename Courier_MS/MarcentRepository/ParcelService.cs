@@ -31,6 +31,9 @@ namespace Courier_MS.MarcentRepository
                     parameters.Add("@COD", parcel.COD);
                     parameters.Add("@Notes", parcel.Notes);
                     parameters.Add("@Status", parcel.Status);
+                    parameters.Add("@PickupLocation", parcel.PickupLocation);
+                    parameters.Add("@DeliveryLocation", parcel.DeliveryLocation);
+                    parameters.Add("@DeliveyCharge", parcel.DeliveyCharge);
 
 
 
@@ -169,5 +172,35 @@ namespace Courier_MS.MarcentRepository
                 throw;
             }
         }
+
+        
+        public async Task<dynamic> GetPrice(int PickupLocation, int DeliveryLocation, int Weight)
+        {
+            try
+            {
+                using (var connection = _dapper.CreateConnection())
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@flag", 8);
+                    parameters.Add("@StoreId", PickupLocation);
+                    parameters.Add("@AreaId", DeliveryLocation);
+                    parameters.Add("@Weight", Weight);
+
+                    var data = await connection.QueryFirstOrDefaultAsync<dynamic>(
+                        "SP_Parcels",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+                    return data;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
     }
 }
