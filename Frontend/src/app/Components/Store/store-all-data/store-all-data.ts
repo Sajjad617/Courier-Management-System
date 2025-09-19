@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClientConnection } from 'src/app/services/httpClientConnection.service';
+import { SignalRService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-store-all-data',
@@ -10,13 +11,23 @@ import { HttpClientConnection } from 'src/app/services/httpClientConnection.serv
 })
 export class StoreAllData {
   rcv_store: any[] = [];
-  constructor(private apilink:HttpClientConnection, private router:Router) {
+  constructor(
+    private apilink:HttpClientConnection,
+    private router:Router,
+    private signalR : SignalRService
+  ) 
+  {
+
     this.get_store();
+    // this.signalR.hubConnection.on;
+    this.signalR.hubConnection.on("GetStoreData", (data:any) => {
+      this.get_store();
+    })
   }
   editstore(storeId: number) {
     this.router.navigate(['/create-store'], { queryParams: { id: storeId } });
   }
-  
+
   get_store(){
     this.apilink.GetData('Store/GetStore').subscribe((data:any)=>{
       this.rcv_store = data;

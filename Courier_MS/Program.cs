@@ -15,6 +15,9 @@ builder.Services.AddScoped<ILocation, LocationService>();
 builder.Services.AddScoped<IStore, StoreService>();
 builder.Services.AddScoped<IMail, MailService>();
 builder.Services.AddScoped<IPricingPlan, PricingPlanService>();
+builder.Services.AddSignalR();
+//builder.Services.AddScoped< PricingPlanService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,5 +50,6 @@ app.UseCors("corsapp");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

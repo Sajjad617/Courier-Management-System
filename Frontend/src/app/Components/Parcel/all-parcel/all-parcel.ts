@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { HttpClientConnection } from 'src/app/services/httpClientConnection.service';
+import { SignalRService } from 'src/app/services/signalr.service';
 import Swal from 'sweetalert2';
 // import { PercelrcvVM } from 'src/app/Models/percel-vm.model';
 
@@ -16,15 +17,25 @@ export class AllParcel {
 
   rcv_data :any[]=[];
 
-   constructor(private http: HttpClient, private router : Router, private dataService : HttpClientConnection){
+   constructor(
+    private http: HttpClient,
+    private router : Router,
+    private dataService : HttpClientConnection,
+    private signalR:SignalRService
+  ){
     debugger;
+    // this.signalR.hubConnection.on();
     this.getPercelList();
-    
+
+    this.signalR.hubConnection.on('CreateNewParcel', (data: any) => {
+      this.getPercelList();
+    });
+
 };
 
   //  ngOnInit(): void {
   //  this.getPercelList();
-  // }; 
+  // };
 getPercelList(){
   this.dataService.GetData('Marcent/ParcelGet').subscribe((data:any)=>{
     this.rcv_data = data;

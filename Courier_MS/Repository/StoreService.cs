@@ -2,6 +2,7 @@
 using Courier_MS.Interface;
 using Courier_MS.ViewModel;
 using Dapper;
+using Microsoft.AspNetCore.SignalR;
 using System.Data;
 using System.Reflection;
 
@@ -10,9 +11,11 @@ namespace Courier_MS.Repository
     public class StoreService : IStore
     {
         private readonly DapperContext _dapper;
-        public StoreService(DapperContext dapper)
+        private readonly IHubContext<ChatHub> _hubcontext;
+        public StoreService(DapperContext dapper, IHubContext<ChatHub> hubcontext)
         {
             _dapper = dapper;
+            _hubcontext = hubcontext;
 
         }
         public async Task<dynamic> SaveStore(StoreVM store)
@@ -36,6 +39,12 @@ namespace Courier_MS.Repository
                         parameters,
                         commandType: CommandType.StoredProcedure
                     );
+                    //var datts = new
+                    //{
+                    //    msg = "New Store Create"
+                    //};
+                    await _hubcontext.Clients.All.SendAsync("GetStoreData");
+
                     return data;
                 }
             }

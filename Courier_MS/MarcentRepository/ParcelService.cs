@@ -2,6 +2,7 @@
 using Courier_MS.Interface;
 using Courier_MS.MarcentModel;
 using Dapper;
+using Microsoft.AspNetCore.SignalR;
 using System.Data;
 using System.Reflection;
 
@@ -10,9 +11,13 @@ namespace Courier_MS.MarcentRepository
     public class ParcelService : IMarcent
     {
         private readonly DapperContext _dapper;
-        public ParcelService(DapperContext dapper)
+        private readonly IHubContext<ChatHub> _hubContext;
+
+    
+        public ParcelService(DapperContext dapper, IHubContext<ChatHub> hubContext)
         {
             _dapper = dapper;
+            _hubContext = hubContext;
         }
         public async Task<dynamic> ParcelSave(ParcelVM parcel)
         {
@@ -42,6 +47,12 @@ namespace Courier_MS.MarcentRepository
                         parameters,
                         commandType: CommandType.StoredProcedure
                     );
+                    var datts = new
+                    {
+                        msg ="New Parcel Create"
+                    };
+                    await _hubContext.Clients.All.SendAsync("CreateNewParcel", datts);
+
                     return data;
                 }
             }
