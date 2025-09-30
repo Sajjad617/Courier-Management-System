@@ -1,6 +1,6 @@
 // angular import
 import { Component } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 // bootstrap import
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -17,14 +17,11 @@ import { ChatMsgComponent } from './chat-msg/chat-msg.component';
   styleUrls: ['./nav-right.component.scss'],
   providers: [NgbDropdownConfig],
   animations: [
-    trigger('slideInOutLeft', [
-      transition(':enter', [style({ transform: 'translateX(100%)' }), animate('300ms ease-in', style({ transform: 'translateX(0%)' }))]),
-      transition(':leave', [animate('300ms ease-in', style({ transform: 'translateX(100%)' }))])
-    ]),
     trigger('slideInOutRight', [
-      transition(':enter', [style({ transform: 'translateX(-100%)' }), animate('300ms ease-in', style({ transform: 'translateX(0%)' }))]),
-      transition(':leave', [animate('300ms ease-in', style({ transform: 'translateX(-100%)' }))])
-    ])
+      state('void', style({ transform: 'translateX(100%)' })),
+      state('*', style({ transform: 'translateX(0)' })),
+      transition('void <=> *', animate('300ms ease-in-out')),
+    ]),
   ]
 })
 export class NavRightComponent {

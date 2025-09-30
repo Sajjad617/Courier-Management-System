@@ -27,8 +27,9 @@ onsubmit(){
   this.dataService.PostData('Administrator/login', this.login_data).subscribe(
     (data:any) =>{
       console.log(data);
-      if(data.Result == 'Success'){
+      if(data.data.Result == this.login_data.Email){
         // alert('Login Successfuly');
+        localStorage.setItem('token', data.token);
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

@@ -1,5 +1,6 @@
 ﻿using Courier_MS.Interface;
 using Courier_MS.MarcentModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,7 @@ namespace Courier_MS.Controllers
             }
         }
         [HttpGet("ParcelGet")]
+        [Authorize]
         public async Task<IActionResult> ParcelGet()
         {
             try

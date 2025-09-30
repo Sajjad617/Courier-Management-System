@@ -1,5 +1,6 @@
 ﻿using Courier_MS.Interface;
 using Courier_MS.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +38,16 @@ namespace Courier_MS.Controllers
             return Ok(data);
         }
 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] string token)
+        {
+            var data = await _administrator.Logout(token);
+            return Ok(data);
+        }
+
+
         [HttpGet("GetSignup")]
+        [Authorize]
         public async Task<IActionResult> GetSignup(bool approve)
         {
             var data = await _administrator.GetSignup(approve);

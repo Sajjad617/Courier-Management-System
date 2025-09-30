@@ -1,3 +1,4 @@
+<button></button>
 <ul class="navbar-nav ms-auto">
   <li>
     <div class="dropdown" ngbDropdown placement="auto">
@@ -124,8 +125,9 @@
   </li>
 </ul>
 
+
 @if (visibleUserList) {
-  <section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutLeft]>
+  <section class="header-user-list" [ngClass]="{ open: visibleUserList }" [@slideInOutRight]>
     <app-chat-user-list
       (ChatToggle)="onChatToggle($event)"
       (ChatCollapse)="this.visibleUserList = !this.visibleUserList; this.chatMessage = false"
@@ -133,7 +135,7 @@
   </section>
 }
 @if (chatMessage) {
-  <section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutLeft]>
+  <section class="header-chat" [ngClass]="{ open: chatMessage }" [@slideInOutRight]>
     <app-chat-msg (ChatToggle)="this.chatMessage = !this.chatMessage" [friendId]="friendId" />
   </section>
 }

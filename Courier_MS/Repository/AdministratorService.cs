@@ -2,8 +2,12 @@
 using Courier_MS.Interface;
 using Courier_MS.ViewModel;
 using Dapper;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security.Claims;
+using System.Text;
 
 namespace Courier_MS.Repository
 {
@@ -11,10 +15,12 @@ namespace Courier_MS.Repository
     {
         private readonly DapperContext _dapper;
         private readonly IMail _mail;
-        public AdministratorService(DapperContext dapper, IMail mail)
+        private readonly IConfiguration _config;
+        public AdministratorService(DapperContext dapper, IMail mail, IConfiguration config)
         {
             _dapper = dapper;
             _mail = mail;
+            _config = config;
         }
         public async Task<dynamic> Signup(SignupVM model)
         {
@@ -91,7 +97,36 @@ namespace Courier_MS.Repository
                         parameters,
                         commandType: CommandType.StoredProcedure
                     );
-                    return data;
+
+                    if(data  == null)
+                        return data;
+                    else
+                    {
+                        var token = GenerateJwtToken(model.Email);
+                        return new
+                        {
+                            data = data,
+                            token = token
+                        };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
+        public async Task<dynamic> Logout(string token)
+        {
+            try
+            {
+                using (var connection = _dapper.CreateConnection())
+                {
+                    // Save token in blacklist (DB or Redis)
+                    _tokenBlacklistService.Add(token);
+                    return new { message = "Logged out successfully" };
                 }
             }
             catch (Exception)
@@ -101,6 +136,29 @@ namespace Courier_MS.Repository
             }
         }
 
+        // JWT Token Start
+        private string GenerateJwtToken(string username)
+        {
+            var claims = new[]
+            {
+            new Claim(JwtRegisteredClaimNames.Sub, username),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["Jwt:ExpireMinutes"])),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        // JWT Token End
         public async Task<dynamic> GetSignup(bool approve)
         {
             try
@@ -126,6 +184,7 @@ namespace Courier_MS.Repository
                 throw;
             }
         }
+        
 
         public async Task<dynamic> DeleteSignup(int id)
         {
