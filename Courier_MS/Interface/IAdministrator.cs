@@ -6,7 +6,7 @@ namespace Courier_MS.Interface
     {
         Task<dynamic> Signup(SignupVM model);
         Task<dynamic> Login(LoginVM model);
-        Task<dynamic> Logout(string token);
+        //Task<dynamic> Logout(string token);
         Task<dynamic> GetSignup(bool approve);
         Task<dynamic> DeleteSignup(int id);
         Task<dynamic> Updateapprove(int id, bool approve);

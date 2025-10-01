@@ -38,12 +38,12 @@ namespace Courier_MS.Controllers
             return Ok(data);
         }
 
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout([FromBody] string token)
-        {
-            var data = await _administrator.Logout(token);
-            return Ok(data);
-        }
+        //[HttpPost("logout")]
+        //public async Task<IActionResult> Logout([FromBody] string token)
+        //{
+        //    var data = await _administrator.Logout(token);
+        //    return Ok(data);
+        //}
 
 
         [HttpGet("GetSignup")]

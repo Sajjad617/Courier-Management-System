@@ -118,23 +118,23 @@ namespace Courier_MS.Repository
             }
         }
         
-        public async Task<dynamic> Logout(string token)
-        {
-            try
-            {
-                using (var connection = _dapper.CreateConnection())
-                {
-                    // Save token in blacklist (DB or Redis)
-                    _tokenBlacklistService.Add(token);
-                    return new { message = "Logged out successfully" };
-                }
-            }
-            catch (Exception)
-            {
+        //public async Task<dynamic> Logout(string token)
+        //{
+        //    try
+        //    {
+        //        using (var connection = _dapper.CreateConnection())
+        //        {
+        //            // Save token in blacklist (DB or Redis)
+        //            _tokenBlacklistService.Add(token);
+        //            return new { message = "Logged out successfully" };
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
         // JWT Token Start
         private string GenerateJwtToken(string username)
