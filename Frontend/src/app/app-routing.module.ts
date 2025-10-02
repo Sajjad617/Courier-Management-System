@@ -33,6 +33,7 @@ import { ReturnBack } from './Components/Parcel/return-back/return-back';
 import { MarcentView } from './Components/admin/Marcent/marcent-view/marcent-view';
 import { PricingPlanForm } from './Components/admin/PricingPlan/pricing-plan-form/pricing-plan-form';
 import { PricingPlanTbl } from './Components/admin/PricingPlan/pricing-plan-tbl/pricing-plan-tbl';
+import { AuthGuard } from './services/AuthGuard/auth-guard';
 // import { CreateStore } from './Components/create-store/create-store';
 
 const routes: Routes = [
@@ -82,6 +83,8 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
@@ -116,6 +119,8 @@ const routes: Routes = [
       {
         path: 'marcent',
         component: Marcent
+        // canActivate:
+        // [AuthGuard]
       },
       {
         path: 'Create-New-Marcant',
@@ -172,7 +177,8 @@ const routes: Routes = [
       },
       {
         path: 'area',
-        component: Area
+        component: Area,
+        // data: { bypassAuth: true } // tell AuthGuard to allow access}
       },
       {
         path: 'city',

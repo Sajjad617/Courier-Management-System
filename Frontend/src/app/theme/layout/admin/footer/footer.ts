@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -7,8 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './footer.scss'
 })
 export class Footer {
+  constructor(private router:Router){}
   logout(){
-    
+    localStorage.clear();
+    this.router.navigate(['/home']);
   }
 }
 
